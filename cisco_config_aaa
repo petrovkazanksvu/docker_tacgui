@@ -1,0 +1,25 @@
+conf t
+aaa new-model
+tacacs-server host 172.17.0.2 key secret124
+aaa authentication login tacgui group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local
+aaa accounting exec default
+  action-type start-stop
+  group tacacs+
+aaa accounting commands 0 default
+  action-type start-stop
+  group tacacs+
+aaa accounting commands 15 default
+  action-type start-stop
+  group tacacs+
+
+line vty 0 4
+  login authentication tacgui
+  transport input telnet
+  exit
+  
+
+test aaa group tacacs+ geo qwer1234 secret124
